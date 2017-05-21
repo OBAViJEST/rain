@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=rain
+Comment=rain P2P Cryptocurrency
+Comment[fr]=rain, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=rain, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/rain-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/bitcoin80.xpm
+MimeType=x-scheme-handler/rain;
+Categories=Office;
