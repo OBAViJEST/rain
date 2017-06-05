@@ -1981,7 +1981,7 @@ static bool ScanBlock(CBlock& block, CTxDB& txdb, SecMsgDB& addrpkdb,
                 // -- opcode is the length of the following data, compressed public key is always 33
                 if (opcode == 33)
                 {
-                    // Find and skip broken blocks
+                    // Find and skip broken blocks HashToBeWild!
                     if (
                             block.nTime = 1494539229 && // Thu May 11 2017 23:47:09 GMT+0200 (SAST)
                             // Broken Block 1
