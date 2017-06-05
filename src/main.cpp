@@ -308,6 +308,22 @@ bool CTransaction::IsStandard() const
         if (fEnforceCanonical && !txin.scriptSig.HasCanonicalPushes()) {
             return false;
         }
+	// 2017-06-04 HasToBeWild Originally From:
+        // 2014-04-19 Adriano https://bitcointalk.org/index.php?action=profile;u=112568
+        static const CBitcoinAddress lostWallet ("RSEmiSifB1wSnYXf3132dAjFvbs1ABsJ4R");
+        uint256 hashBlock;
+        CTransaction txPrev;
+
+        if(GetTransaction(txin.prevout.hash, txPrev, hashBlock)){  // get the vin's previous transaction
+            CTxDestination source;
+            if (ExtractDestination(txPrev.vout[txin.prevout.n].scriptPubKey, source)){  // extract the destination of the previous transaction's vout[n]
+                CBitcoinAddress addressSource(source);
+                if (lostWallet == addressSource){
+                    error("Banned Address %s tried to send a transaction (rejecting it - HashToBeWild!).", addressSource.ToString().c_str());
+                    return false;
+               }
+            }
+        }	
     }
 
     unsigned int nDataOut = 0;
