@@ -1972,7 +1972,9 @@ static bool ScanBlock(CBlock& block, CTxDB& txdb, SecMsgDB& addrpkdb,
             
             uint256 prevoutHash;
             CKey key;
-            
+           
+            int brokenBlockFound = 0;
+	    
             // -- matching address is in scriptPubKey of previous tx output
             while (pc < pend)
             {
