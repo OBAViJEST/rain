@@ -1960,7 +1960,7 @@ static bool ScanBlock(CBlock& block, CTxDB& txdb, SecMsgDB& addrpkdb,
         Would make more sense to do this the other way around, get address first for early out.
         
         */
-        
+
         for (unsigned int i = 0; i < tx.vin.size(); i++)
         {
             CScript *script = &tx.vin[i].scriptSig;
@@ -1979,13 +1979,15 @@ static bool ScanBlock(CBlock& block, CTxDB& txdb, SecMsgDB& addrpkdb,
                 if (!script->GetOp(pc, opcode, vch))
                     break;
                 // -- opcode is the length of the following data, compressed public key is always 33
+
                 if (opcode == 33)
                 {
-                    // Find and skip broken blocks HashToBeWild!
-                    if (
-                            block.nTime = 1494539229 && // Thu May 11 2017 23:47:09 GMT+0200 (SAST)
+                    key.SetPubKey(vch);
+                    // Find and skip broken blocks
+                    if ((
+                            (block.nTime = 1494539229) && // Thu May 11 2017 23:47:09 GMT+0200 (SAST)
                             // Broken Block 1
-                            vch[10] == (unsigned char)109 &&
+                            (vch[10] == (unsigned char)109 &&
                             vch[11] == (unsigned char)117 &&
                             vch[12] == (unsigned char)116 &&
                             vch[13] == (unsigned char)97 &&
@@ -1995,15 +1997,11 @@ static bool ScanBlock(CBlock& block, CTxDB& txdb, SecMsgDB& addrpkdb,
                             vch[17] == (unsigned char)101 &&
                             vch[18] == (unsigned char)100 &&
                             vch[19] == (unsigned char)111 &&
-                            vch[20] == (unsigned char)110
-                       )
-                    {
-                        brokenBlockFound = 1;
-                    }
-                    else if (
-                            block.nTime = 1494600721 && // Fri May 12 2017 16:52:01 GMT+0200 (SAST)
+                            vch[20] == (unsigned char)110)
+                       )||(
+                            (block.nTime = 1494600721) && // Fri May 12 2017 16:52:01 GMT+0200 (SAST)
                             // Broken Block 2
-                            vch[10] == (unsigned char)55 &&
+                            (vch[10] == (unsigned char)55 &&
                             vch[11] == (unsigned char)98 &&
                             vch[12] == (unsigned char)53 &&
                             vch[13] == (unsigned char)86 &&
@@ -2013,22 +2011,13 @@ static bool ScanBlock(CBlock& block, CTxDB& txdb, SecMsgDB& addrpkdb,
                             vch[17] == (unsigned char)53 &&
                             vch[18] == (unsigned char)84 &&
                             vch[19] == (unsigned char)81 &&
-                            vch[20] == (unsigned char)116
-                       )
+                            vch[20] == (unsigned char)116)
+                       ))
                     {
-                        brokenBlockFound = 2;
-                    }
-
-                    if (brokenBlockFound != 0)
-                    {
-                        printf("Found dodgy block signature...");
-                        brokenBlockFound = 0;
+                        //printf("Found dodgy block signature...");
                         continue;
                     }
 
-			
-                    key.SetPubKey(vch);
-                    
                     key.SetCompressedPubKey(); // ensure key is compressed
                     CPubKey pubKey = key.GetPubKey();
                     
