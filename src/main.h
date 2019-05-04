@@ -38,8 +38,8 @@ static const int64_t MAX_MONEY = 500000000 * COIN;
 static const int64_t COIN_YEAR_REWARD = 200 * CENT;
 // implement consensus vote result Option B. Set Max Supply to 750M RAIN and staking to 10%
 static const int64_t COIN_YEAR_REWARD_NEW = 10 * CENT;
-static const int64_t RAIN_CAP = 750000000 * COIN;
-static const int CONSENSUS_CHANGE_BLOCK = 1079606;
+static const int64_t RAIN_CAP = 900000000 * COIN;
+static const int CONSENSUS_CHANGE_BLOCK = 1172950;
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
@@ -116,7 +116,7 @@ bool LoadExternalBlockFile(FILE* fileIn);
 bool CheckProofOfWork(uint256 hash, unsigned int nBits);
 unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake);
 int64_t GetProofOfWorkReward(int nHeight, int64_t nFees, uint256 prevHash);
-int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees);
+int64_t GetProofOfStakeReward(int nHeight, int64_t nCoinAge, int64_t nFees, int64_t supply);
 unsigned int ComputeMinWork(unsigned int nBase, int64_t nTime);
 unsigned int ComputeMinStake(unsigned int nBase, int64_t nTime, unsigned int nBlockTime);
 int GetNumBlocksOfPeers();
