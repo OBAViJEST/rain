@@ -1013,12 +1013,13 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees, uint256 prevHash)
 int64_t GetProofOfStakeReward(int nHeight, int64_t nCoinAge, int64_t nFees, int64_t supply)
 {
     int64_t nSubsidy = 0;
-    if (nHeight <= 1172950)
-	    nSubsidy = nCoinAge * COIN_YEAR_REWARD / 365;
-        else if (nHeight > 1172950) {
-	    if (supply>=900000000)
+    if (nHeight <= CONSENSUS_CHANGE_BLOCK)
+        nSubsidy = nCoinAge * COIN_YEAR_REWARD / 365;
+    else if (nHeight > CONSENSUS_CHANGE_BLOCK) {
+        if (supply >= RAIN_CAP)
             nSubsidy = 0;
-	    else nSubsidy = nCoinAge * COIN_YEAR_REWARD_NEW / 365;
+        else
+            nSubsidy = nCoinAge * COIN_YEAR_REWARD_NEW / 365;
     }
 
     if (fDebug && GetBoolArg("-printcreation"))
