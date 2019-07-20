@@ -1013,8 +1013,11 @@ int64_t GetProofOfWorkReward(int nHeight, int64_t nFees, uint256 prevHash)
 int64_t GetProofOfStakeReward(int nHeight, int64_t nCoinAge, int64_t nFees, int64_t supply)
 {
     int64_t nSubsidy = 0;
-    if (nHeight <= CONSENSUS_CHANGE_BLOCK)
+    int64_t nSubsidyn = 0;
+    if (nHeight <= CONSENSUS_CHANGE_BLOCK) {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD / 365;
+        nSubsidyn = nCoinAge * COIN_YEAR_REWARD_NEW / 365;
+    }
     else if (nHeight > CONSENSUS_CHANGE_BLOCK) {
         if (supply >= RAIN_CAP)
             nSubsidy = 0;
@@ -1022,8 +1025,15 @@ int64_t GetProofOfStakeReward(int nHeight, int64_t nCoinAge, int64_t nFees, int6
             nSubsidy = nCoinAge * COIN_YEAR_REWARD_NEW / 365;
     }
 
-    if (fDebug && GetBoolArg("-printcreation"))
-        printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge);
+    if (fDebug && GetBoolArg("-printcreation")) {
+        printf("GetProofOfStakeReward(): create=%s nCoinAge=%"PRId64" supply=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nCoinAge,supply);
+        if (supply >= RAIN_CAP)
+            printf("Supply cap reached\n");
+        else
+            printf("Supply cap not yet reached\n");
+
+        printf("GetProofOfStakeReward() Preview: create=%s nCoinAge=%"PRId64" supply=%"PRId64"\n", FormatMoney(nSubsidyn).c_str(), nCoinAge,supply);
+    }
 
     return nSubsidy + nFees;
 }
@@ -1561,6 +1571,8 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
         if (!vtx[1].GetCoinAge(txdb, nCoinAge))
             return error("ConnectBlock() : %s unable to get coin age for coinstake", vtx[1].GetHash().ToString().substr(0,10).c_str());
 
+        // debug nMoneySupply
+        printf("Supply: %"PRId64"\n",pindex->pprev->nMoneySupply);
         int64_t nCalculatedStakeReward = GetProofOfStakeReward(pindex->nHeight,nCoinAge, nFees,pindex->pprev->nMoneySupply);
 
         if (nStakeReward > nCalculatedStakeReward)
