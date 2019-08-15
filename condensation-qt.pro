@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = Condensation-qt
-VERSION = 1.0.0.1
+VERSION = 1.0.5.1
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
 CONFIG += no_include_pwd
@@ -13,6 +13,8 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 }
 
+#QMAKE_CXXFLAGS += -std=c++11
+
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
 # for boost thread win32 with _win32 sufix
@@ -24,21 +26,27 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 #    BDB_LIB_PATH, OPENSSL_INCLUDE_PATH and OPENSSL_LIB_PATH respectively
 
 OBJECTS_DIR = build
+#MOC_DIR = c:/dev/moc
 MOC_DIR = build
 UI_DIR = build
 
 win32 {
-	BOOST_LIB_SUFFIX=-mgw49-mt-s-1_57
-	BOOST_INCLUDE_PATH=C:/deps/boost_1_57_0
-	BOOST_LIB_PATH=C:/deps/boost_1_57_0/stage/lib
-	BDB_INCLUDE_PATH=C:/deps/db-6.1.26.NC/build_unix
-	BDB_LIB_PATH=C:/deps/db-6.1.26.NC/build_unix
-	OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2j/include
-	OPENSSL_LIB_PATH=C:/deps/openssl-1.0.2j
-	MINIUPNPC_INCLUDE_PATH=C:/deps/
-	MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
-	QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
-	QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
+#        BOOST_LIB_SUFFIX=-vc140-mt-gd-1_62
+#        BOOST_INCLUDE_PATH=C:/dev/boost_1_62_0
+#        BOOST_LIB_PATH=C:/dev/boost_1_62_0/stage/lib
+        BOOST_LIB_SUFFIX=-vc140-mt
+        BOOST_INCLUDE_PATH=C:/vcpkg/installed/x64-windows/include
+        BOOST_LIB_PATH=C:/vcpkg/installed/x64-windows/lib
+#        BDB_INCLUDE_PATH=C:/dev/db-4.8.30.NC/build_windows
+#        BDB_LIB_PATH=C:/dev/db-4.8.30.NC/build_windows
+        BDB_INCLUDE_PATH=C:/vcpkg/installed/x64-windows/include
+        BDB_LIB_PATH=C:/vcpkg/installed/x64-windows/lib
+        OPENSSL_INCLUDE_PATH=C:/vcpkg/installed/x64-windows/include
+        OPENSSL_LIB_PATH=C:/vcpkg/installed/x64-windows/lib
+        MINIUPNPC_INCLUDE_PATH=C:/vcpkg/installed/x64-windows/include
+        MINIUPNPC_LIB_PATH=C:/vcpkg/installed/x64-windows/lib
+        QRENCODE_INCLUDE_PATH=C:/vcpkg/installed/x64-windows/include
+        QRENCODE_LIB_PATH=C:/vcpkg/installed/x64-windows/lib
 }
 
 build_macosx64 {
@@ -64,6 +72,8 @@ build_macosx64 {
     QMAKE_CFLAGS += -arch x86_64
     QMAKE_LFLAGS += -arch x86_64 -stdlib=libc++
 }
+
+QMAKE_CXXFLAGS += -Wa,-mbig-obj
 
 # use: qmake "RELEASE=1"
 contains(RELEASE, 1) {
@@ -185,7 +195,7 @@ contains(USE_O3, 1) {
     QMAKE_CFLAGS += -msse2
 }
 
-QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wno-ignored-qualifiers -Wformat -Wformat-security -Wno-unused-parameter -Wstack-protector
+#QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wno-ignored-qualifiers -Wformat -Wformat-security -Wno-unused-parameter -Wstack-protector
 
 # Input
 DEPENDPATH += src src/json src/qt
