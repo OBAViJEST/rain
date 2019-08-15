@@ -23,11 +23,6 @@ class CNode;
 class CBlockIndex;
 extern int nBestHeight;
 
-//winand
-#ifdef max
-#undef max
-#endif
-
 
 /** Time between pings automatically sent out for latency probing and keepalive (in seconds). */
 static const int PING_INTERVAL = 2 * 60;
