@@ -38,8 +38,8 @@ static const int64_t MAX_MONEY = 500000000 * COIN;
 static const int64_t COIN_YEAR_REWARD = 200 * CENT;
 // implement consensus vote result Option B. Set Max Supply to 4000M RAIN and staking to 10%
 static const int64_t COIN_YEAR_REWARD_NEW = 10 * CENT;
-static const int64_t RAIN_CAP = 5000000000 * COIN;
-static const int CONSENSUS_CHANGE_BLOCK = 2036160; // should be around January 20th 2021
+static const int64_t RAIN_CAP = 10000000000 * COIN;
+static const int CONSENSUS_CHANGE_BLOCK = 2168980; // should be around April 1st 2021
 
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
