@@ -28,9 +28,9 @@ MOC_DIR = build
 UI_DIR = build
 
 win32 {
-	BOOST_LIB_SUFFIX=-mgw49-mt-s-1_57
-	BOOST_INCLUDE_PATH=C:/deps/boost_1_57_0
-	BOOST_LIB_PATH=C:/deps/boost_1_57_0/stage/lib
+	BOOST_LIB_SUFFIX=-mt
+	BOOST_INCLUDE_PATH=$MXE_INCLUDE_PATH/boost
+	BOOST_LIB_PATH=$MXE_LIB_PATH
 	BDB_INCLUDE_PATH=C:/deps/db-6.1.26.NC/build_unix
 	BDB_LIB_PATH=C:/deps/db-6.1.26.NC/build_unix
 	OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.2j/include
@@ -95,6 +95,7 @@ contains(USE_QRCODE, 1) {
     LIBS += -lqrencode
 }
 
+USE_UPNP=-
 # use: qmake "USE_UPNP=1" ( enabled by default; default)
 #  or: qmake "USE_UPNP=0" (disabled by default)
 #  or: qmake "USE_UPNP=-" (not supported)
@@ -484,7 +485,7 @@ LIBS += $$join(BOOST_LIB_PATH,,-L,) $$join(BDB_LIB_PATH,,-L,) $$join(OPENSSL_LIB
 LIBS += -lssl -lcrypto -ldb_cxx$$BDB_LIB_SUFFIX
 # -lgdi32 has to happen after -lcrypto (see  #681)
 windows:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
-LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
+LIBS += -L/mnt/mxe/usr/i686-w64-mingw32.static/include/boost -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
 windows:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
 
 contains(RELEASE, 1) {

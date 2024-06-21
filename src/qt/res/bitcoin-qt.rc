@@ -22,7 +22,7 @@ BEGIN
             VALUE "FileDescription",    "rain-qt (OSS GUI client for rain)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "rain-qt"
-            VALUE "LegalCopyright",     "2017 bitc0der"
+            VALUE "LegalCopyright",     "2017-2021 Rain community"
             VALUE "LegalTrademarks1",   "Distributed under the MIT/X11 software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
             VALUE "OriginalFilename",   "rain-qt.exe"
             VALUE "ProductName",        "rain-qt"
